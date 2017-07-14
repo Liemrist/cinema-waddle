@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Cinema waddle</string>
+
+    <!--Tabs in PagerAdapter-->
+    <string name="upcoming">Upcoming</string>
+    <string name="now_playing">Now playing</string>
+    <string name="favourites">Favourites</string>
+
+    <!--Drawer in MainActivity-->
+    <string name="openDrawer">open</string>
+    <string name="closeDrawer">close</string>
+
+    <string name="empty_favourites_text">Here will be your favourites</string>
+    <string name="action_log_in">Log in</string>
+</resources>
