@@ -7,37 +7,68 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import project.epam.com.cinemawaddle.R;
 import project.epam.com.cinemawaddle.util.Constants;
-import project.epam.com.cinemawaddle.util.base.BasePresenter;
-import project.epam.com.cinemawaddle.util.base.BaseView;
 
 
-public abstract class BaseFragmentList extends Fragment implements BaseView {
+public abstract class BaseTabViewImpl<T, S extends BaseTabPresenter<T>> extends Fragment
+        implements BaseTabView<T> {
 
     @BindView(R.id.text_message) TextView messageView;
     @BindView(R.id.progressBar) ProgressBar progressBarView;
     @BindView(R.id.view_movies) protected RecyclerView recyclerView;
-    @BindView(R.id.swiperefresh_titles) protected SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.layout_swipe_refresh) protected SwipeRefreshLayout swipeRefreshLayout;
 
     private Unbinder unbinder;
 
+    protected S presenter;
     protected int page;
     protected int totalItemCount;
     protected int pastVisibleItems;
     protected int visibleItemCount;
     protected boolean loading;
-
-    protected BasePresenter presenter;
+    protected List<T> items;
+    protected Spinner spinnerView;
     protected LinearLayoutManager layoutManager;
 
+
+    @Override
+    public void showMoviesSet(List<T> items) {
+        this.items.clear();
+        this.items.addAll(items);
+
+        layoutManager.scrollToPositionWithOffset(0, 0);
+
+        recyclerView.getAdapter().notifyDataSetChanged();
+
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+
+    @Override
+    public void showMoviesAfterUpdate(List<T> items, int totalPages, int totalResults) {
+        this.items.addAll(items);
+
+        if (recyclerView != null) {
+            recyclerView.getAdapter().notifyDataSetChanged();
+        }
+
+        if (totalPages > page) {
+            loading = true;
+            page++;
+        }
+    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -48,6 +79,12 @@ public abstract class BaseFragmentList extends Fragment implements BaseView {
         loading = true;
 
         setHasOptionsMenu(true);
+
+        spinnerView = ButterKnife.findById(getActivity(), R.id.spinner);
+
+        swipeRefreshLayout.setOnRefreshListener(() -> presenter
+                .onSwipeRefreshInteraction(spinnerView.getSelectedItemPosition()));
+
     }
 
     @Override
@@ -88,5 +125,19 @@ public abstract class BaseFragmentList extends Fragment implements BaseView {
         recyclerView.addItemDecoration(itemDecoration);
 
         recyclerView.setHasFixedSize(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_connect:
+                presenter.onSortByNameClick(items);
+                return true;
+            case R.id.nav_disconnect:
+                presenter.onSortByRatingClick(items);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

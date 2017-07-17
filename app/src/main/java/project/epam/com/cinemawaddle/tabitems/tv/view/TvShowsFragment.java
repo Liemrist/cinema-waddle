@@ -4,32 +4,24 @@ package project.epam.com.cinemawaddle.tabitems.tv.view;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import butterknife.ButterKnife;
 import project.epam.com.cinemawaddle.R;
+import project.epam.com.cinemawaddle.tabitems.BaseTabViewImpl;
+import project.epam.com.cinemawaddle.tabitems.adapters.TvShowsRecyclerAdapter;
 import project.epam.com.cinemawaddle.tabitems.tv.model.TvShowsModel;
 import project.epam.com.cinemawaddle.tabitems.tv.presenter.TvShowPresenter;
-import project.epam.com.cinemawaddle.tabitems.BaseFragmentList;
-import project.epam.com.cinemawaddle.tabitems.adapters.TvShowsRecyclerAdapter;
 import project.epam.com.cinemawaddle.util.Constants;
-import project.epam.com.cinemawaddle.util.tvshows.TvListResult;
+import project.epam.com.cinemawaddle.util.service.tvshows.TvShow;
 
 
-public class TvShowsFragment extends BaseFragmentList implements ITvShowView,
-        TvShowsRecyclerAdapter.OnMovieClickListener{
-
-    private List<TvListResult> items;
-    private TvShowPresenter presenter;
-    protected Spinner spinnerView;
+public class TvShowsFragment extends BaseTabViewImpl<TvShow, TvShowPresenter>
+        implements TvShowsRecyclerAdapter.OnMovieClickListener {
 
     public TvShowsFragment() {
         // Required empty public constructor
@@ -45,45 +37,11 @@ public class TvShowsFragment extends BaseFragmentList implements ITvShowView,
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        swipeRefreshLayout.setOnRefreshListener(() -> presenter
-                .onSwipeRefreshInteraction(spinnerView.getSelectedItemPosition()));
-
-        spinnerView = ButterKnife.findById(getActivity(), R.id.spinner);
-
         initRecycler();
 
         initSpinner(R.array.tv_show_spinner_items);
 
         presenter = new TvShowPresenter(this, new TvShowsModel(getContext()));
-    }
-
-    @Override
-    public void showMoviesAfterUpdate(List<TvListResult> items, int totalPages) {
-        this.items.addAll(items);
-
-        recyclerView.getAdapter().notifyDataSetChanged();
-
-        if (totalPages > page) {
-            loading = true;
-            page++;
-        }
-    }
-
-    @Override
-    public void showMoviesSet(List<TvListResult> items) {
-        this.items.clear();
-        this.items.addAll(items);
-
-        layoutManager.scrollToPositionWithOffset(0, 0);
-
-        recyclerView.getAdapter().notifyDataSetChanged();
-
-        swipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void onMovieClick(TvListResult movie) {
-        presenter.onMovieClicked(getContext(), movie);
     }
 
     @Override
@@ -113,19 +71,6 @@ public class TvShowsFragment extends BaseFragmentList implements ITvShowView,
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.nav_connect:
-                presenter.onSortByNameClick(items);
-                return true;
-            case R.id.nav_disconnect:
-                presenter.onSortByRatingClick(items);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     protected void initSpinner(int textArrayResId) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
@@ -145,5 +90,11 @@ public class TvShowsFragment extends BaseFragmentList implements ITvShowView,
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+    }
+
+
+    @Override
+    public void onMovieClick(TvShow movie) {
+        presenter.onMovieClicked(getContext(), movie);
     }
 }

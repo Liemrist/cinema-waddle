@@ -1,4 +1,4 @@
-package project.epam.com.cinemawaddle.tabitems.movies.view;
+package project.epam.com.cinemawaddle.tabitems.tv.view;
 
 
 import android.os.Bundle;
@@ -23,15 +23,15 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import project.epam.com.cinemawaddle.R;
 import project.epam.com.cinemawaddle.tabitems.BaseTabView;
-import project.epam.com.cinemawaddle.tabitems.adapters.MoviesRecyclerAdapter;
-import project.epam.com.cinemawaddle.tabitems.movies.model.TabModel;
-import project.epam.com.cinemawaddle.tabitems.movies.presenter.MovieListPresenter;
+import project.epam.com.cinemawaddle.tabitems.adapters.TvShowsRecyclerAdapter;
+import project.epam.com.cinemawaddle.tabitems.tv.model.TvShowsModel;
+import project.epam.com.cinemawaddle.tabitems.tv.presenter.TvShowPresenter;
 import project.epam.com.cinemawaddle.util.Constants;
-import project.epam.com.cinemawaddle.util.service.movies.Movie;
+import project.epam.com.cinemawaddle.util.service.tvshows.TvShow;
 
 
-public class MovieBlankFragment extends Fragment implements BaseTabView<Movie>,
-        MoviesRecyclerAdapter.OnMovieClickListener {
+public class TvShowsBlankFragment extends Fragment implements BaseTabView<TvShow>,
+        TvShowsRecyclerAdapter.OnMovieClickListener {
 
 
     @BindView(R.id.text_message)
@@ -43,8 +43,8 @@ public class MovieBlankFragment extends Fragment implements BaseTabView<Movie>,
     @BindView(R.id.layout_swipe_refresh)
     protected SwipeRefreshLayout swipeRefreshLayout;
 
-    private List<Movie> items;
-    private MovieListPresenter presenter;
+    private List<TvShow> items;
+    private TvShowPresenter presenter;
     private int position;
     private Unbinder unbinder;
 
@@ -56,11 +56,11 @@ public class MovieBlankFragment extends Fragment implements BaseTabView<Movie>,
 
     protected LinearLayoutManager layoutManager;
 
-    public MovieBlankFragment() {
+    public TvShowsBlankFragment() {
     }
 
-    public static MovieBlankFragment newInstance(int index) {
-        MovieBlankFragment fragment = new MovieBlankFragment();
+    public static TvShowsBlankFragment newInstance(int index) {
+        TvShowsBlankFragment fragment = new TvShowsBlankFragment();
         Bundle args = new Bundle();
         args.putInt(Constants.ARGUMENT_POSITION_INDEX, index);
         fragment.setArguments(args);
@@ -81,7 +81,7 @@ public class MovieBlankFragment extends Fragment implements BaseTabView<Movie>,
 
         loading = true;
 
-        presenter = new MovieListPresenter(this, new TabModel(getContext()));
+        presenter = new TvShowPresenter(this, new TvShowsModel(getContext()));
 
         setHasOptionsMenu(true);
 
@@ -141,7 +141,7 @@ public class MovieBlankFragment extends Fragment implements BaseTabView<Movie>,
     }
 
     @Override
-    public void showMoviesAfterUpdate(List<Movie> items, int totalPages, int totalResults) {
+    public void showMoviesAfterUpdate(List<TvShow> items, int totalPages, int totalResults) {
         this.items.addAll(items);
 
         recyclerView.getAdapter().notifyDataSetChanged();
@@ -155,7 +155,7 @@ public class MovieBlankFragment extends Fragment implements BaseTabView<Movie>,
     }
 
     @Override
-    public void showMoviesSet(List<Movie> items) {
+    public void showMoviesSet(List<TvShow> items) {
         this.items.clear();
         this.items.addAll(items);
 
@@ -167,7 +167,7 @@ public class MovieBlankFragment extends Fragment implements BaseTabView<Movie>,
     }
 
     @Override
-    public void onMovieClick(Movie movie) {
+    public void onMovieClick(TvShow movie) {
         presenter.onMovieClicked(getContext(), movie);
     }
 
@@ -185,7 +185,7 @@ public class MovieBlankFragment extends Fragment implements BaseTabView<Movie>,
 
         items = new ArrayList<>();
 
-        recyclerView.setAdapter(new MoviesRecyclerAdapter(getContext(), this, items));
+        recyclerView.setAdapter(new TvShowsRecyclerAdapter(getContext(), this, items));
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {

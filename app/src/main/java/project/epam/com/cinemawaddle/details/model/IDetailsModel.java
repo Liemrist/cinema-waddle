@@ -3,8 +3,8 @@ package project.epam.com.cinemawaddle.details.model;
 import android.content.Context;
 
 import project.epam.com.cinemawaddle.util.base.ModelBaseListener;
-import project.epam.com.cinemawaddle.util.movies.Details;
-import project.epam.com.cinemawaddle.util.movies.PostResponse;
+import project.epam.com.cinemawaddle.util.service.movies.Details;
+import project.epam.com.cinemawaddle.util.service.movies.PostResponse;
 
 public interface IDetailsModel {
 

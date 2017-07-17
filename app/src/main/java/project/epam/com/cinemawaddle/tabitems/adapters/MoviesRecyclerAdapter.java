@@ -10,7 +10,7 @@ import java.util.List;
 
 import project.epam.com.cinemawaddle.R;
 import project.epam.com.cinemawaddle.util.Constants;
-import project.epam.com.cinemawaddle.util.movies.Movie;
+import project.epam.com.cinemawaddle.util.service.movies.Movie;
 
 
 /**
@@ -33,8 +33,8 @@ public class MoviesRecyclerAdapter extends BaseAdapter<Movie> {
         Movie movie = objects.get(position);
 
         holder.object = movie;
-        holder.titleView.setText(movie.getTitle());
-        holder.genreView.setText(movie.getRelease_date());
+        holder.titleView.setText(movie.getName());
+        holder.genreView.setText(movie.getReleaseDate());
         holder.ratingView.setText(getVote(movie));
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
@@ -43,7 +43,7 @@ public class MoviesRecyclerAdapter extends BaseAdapter<Movie> {
         });
 
         Glide.with(context)
-                .load(Constants.SECURE_BASE_IMAGE_URL + movie.getPoster_path())
+                .load(Constants.SECURE_BASE_IMAGE_URL + movie.getPosterPath())
                 .centerCrop()
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)

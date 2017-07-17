@@ -21,7 +21,7 @@ import project.epam.com.cinemawaddle.R;
 import project.epam.com.cinemawaddle.details.model.DetailsModel;
 import project.epam.com.cinemawaddle.details.presenter.DetailsPresenter;
 import project.epam.com.cinemawaddle.util.Constants;
-import project.epam.com.cinemawaddle.util.movies.Details;
+import project.epam.com.cinemawaddle.util.service.movies.Details;
 
 
 public class DetailsFragment extends Fragment implements IMovieDetails {
@@ -74,12 +74,7 @@ public class DetailsFragment extends Fragment implements IMovieDetails {
         rotate_backward = AnimationUtils.loadAnimation(getContext(),R.anim.rotate_backward);
         fab.setOnClickListener(v -> animateFAB());
         fab1.setOnClickListener(v -> Log.d("Raj", "Fab 1"));
-        fab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("Raj", "Fab 2");
-            }
-        });
+        fab2.setOnClickListener(v -> Log.d("Raj", "Fab 2"));
 
         presenter = new DetailsPresenter(this, new DetailsModel());
         presenter.loadDetails(movieId);

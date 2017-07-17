@@ -27,7 +27,7 @@ import project.epam.com.cinemawaddle.main.model.MainModel;
 import project.epam.com.cinemawaddle.main.presenter.MainPresenter;
 import project.epam.com.cinemawaddle.pager.TabHostFragment;
 import project.epam.com.cinemawaddle.util.Constants;
-import project.epam.com.cinemawaddle.util.authentication.Account;
+import project.epam.com.cinemawaddle.util.service.authentication.Account;
 
 
 public class MainActivity extends AppCompatActivity implements IMainView {
@@ -163,10 +163,10 @@ public class MainActivity extends AppCompatActivity implements IMainView {
                     presenter.disconnectFromTmdb();
                     break;
                 case R.id.nav_movies:
-                    launchFragmentByType(Constants.MOVIES);
+                    launchFragmentOfType(Constants.MOVIES);
                     break;
                 case R.id.nav_tv_shows:
-                    launchFragmentByType(Constants.TV_SHOWS);
+                    launchFragmentOfType(Constants.TV_SHOWS);
                     break;
             }
 
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         });
     }
 
-    private void launchFragmentByType(int initialType) {
+    private void launchFragmentOfType(int initialType) {
         TabHostFragment fragment = (TabHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.layout_container);
         if (fragment != null && fragment.getArguments() != null) {

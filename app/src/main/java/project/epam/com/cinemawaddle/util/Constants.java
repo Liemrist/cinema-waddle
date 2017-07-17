@@ -7,7 +7,7 @@ public class Constants {
 
     static final String ERROR_MESSAGE_PARSING = "There was an error parsing the errorMessage ";
 
-    static final String URL_BASE = "https://api.themoviedb.org/3/";
+    public static final String URL_BASE = "https://api.themoviedb.org/3/";
     public static final String URL_AUTH = "https://www.themoviedb.org/authenticate/";
     public static final String URL_GRAVATAR = "https://www.gravatar.com/avatar/";
     public static final String URL_DEFAULT_IMAGE = "?d=https://nothing.here.jpg";
@@ -42,7 +42,7 @@ public class Constants {
     public static final String ERROR_MESSAGE_FETCHING_MOVIES = "Error fetching objects";
     public static final String ERROR_MESSAGE_SESSION_DENIED = "Session denied";
     public static final String ERROR_NO_SESSION_FOR_DETAILS = "Error fetching account details. No session id.";
-    public static final String MESSAGE_ALREADY_CONNECTED = "Already conected to TMDb";
+    public static final String MESSAGE_ALREADY_CONNECTED = "Already connected to TMDb";
 
     public static final String ARGUMENT_MOVIE_ID = "ARGUMENT_MOVIE_ID";
     public static final String ARGUMENT_POSITION_INDEX = "ARGUMENT_POSITION_INDEX";

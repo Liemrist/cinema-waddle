@@ -1,4 +1,4 @@
-package project.epam.com.cinemawaddle.util.authentication;
+package project.epam.com.cinemawaddle.util.service.authentication;
 
 
 public final class Account {

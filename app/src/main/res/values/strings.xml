@@ -1,11 +1,6 @@
 <resources>
     <string name="app_name">Cinema waddle</string>
 
-    <!--Tabs in MoviePagerAdapter-->
-    <string name="upcoming">Upcoming</string>
-    <string name="now_playing">Now playing</string>
-    <string name="favourites">Favourites</string>
-
     <!--Drawer in MainActivity-->
     <string name="openDrawer">open</string>
     <string name="closeDrawer">close</string>
@@ -14,7 +9,6 @@
 
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="objects">Movies</string>
     <string name="tv_shows">TV Shows</string>
     <string name="disconnect_from_tmdb">Disconnect from TMDb</string>
@@ -22,4 +16,6 @@
     <string name="you_are">You are</string>
     <string name="not_authorized">Not authorized</string>
     <string name="disconnected">You are disconnected from TMDb</string>
+    <string name="sort_by_name">Sort by name</string>
+    <string name="sort_by_rating">Sort by rating</string>
 </resources>

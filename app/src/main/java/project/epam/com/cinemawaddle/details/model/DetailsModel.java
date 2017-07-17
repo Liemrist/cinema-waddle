@@ -7,10 +7,10 @@ import android.support.annotation.NonNull;
 
 import project.epam.com.cinemawaddle.BuildConfig;
 import project.epam.com.cinemawaddle.util.Constants;
-import project.epam.com.cinemawaddle.util.ServiceGenerator;
-import project.epam.com.cinemawaddle.util.movies.IMoviesService;
-import project.epam.com.cinemawaddle.util.movies.Details;
-import project.epam.com.cinemawaddle.util.movies.PostResponse;
+import project.epam.com.cinemawaddle.util.service.ServiceGenerator;
+import project.epam.com.cinemawaddle.util.service.movies.IMoviesService;
+import project.epam.com.cinemawaddle.util.service.movies.Details;
+import project.epam.com.cinemawaddle.util.service.movies.PostResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

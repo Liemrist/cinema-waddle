@@ -3,7 +3,7 @@ package project.epam.com.cinemawaddle.main.model;
 
 import android.net.Uri;
 
-import project.epam.com.cinemawaddle.util.authentication.Account;
+import project.epam.com.cinemawaddle.util.service.authentication.Account;
 import project.epam.com.cinemawaddle.util.base.ModelBaseListener;
 
 

@@ -5,7 +5,7 @@ import android.net.Uri;
 
 import project.epam.com.cinemawaddle.main.model.IMainModel;
 import project.epam.com.cinemawaddle.main.view.IMainView;
-import project.epam.com.cinemawaddle.util.authentication.Account;
+import project.epam.com.cinemawaddle.util.service.authentication.Account;
 
 
 public class MainPresenter implements IMainPresenter, IMainModel.OnFinishedListener {

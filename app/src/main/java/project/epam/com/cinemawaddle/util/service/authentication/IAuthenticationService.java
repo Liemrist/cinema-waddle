@@ -1,4 +1,4 @@
-package project.epam.com.cinemawaddle.util.authentication;
+package project.epam.com.cinemawaddle.util.service.authentication;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -10,7 +10,7 @@ public interface IAuthenticationService {
      * Creates a temporary request token that can be used to validate a TMDb user login.
      */
     @GET("authentication/token/new")
-    Call<Token> createToken(@Query("api_key") String apiKey);
+    Call<Token> createToken(@Query("api_key") String apiKey );
 
     /**
      * Creates a fully valid session ID once a user has validated the request token.

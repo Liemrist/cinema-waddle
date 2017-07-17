@@ -8,11 +8,11 @@ import android.support.annotation.NonNull;
 
 import project.epam.com.cinemawaddle.BuildConfig;
 import project.epam.com.cinemawaddle.util.Constants;
-import project.epam.com.cinemawaddle.util.ServiceGenerator;
-import project.epam.com.cinemawaddle.util.authentication.Account;
-import project.epam.com.cinemawaddle.util.authentication.IAuthenticationService;
-import project.epam.com.cinemawaddle.util.authentication.Session;
-import project.epam.com.cinemawaddle.util.authentication.Token;
+import project.epam.com.cinemawaddle.util.service.ServiceGenerator;
+import project.epam.com.cinemawaddle.util.service.authentication.Account;
+import project.epam.com.cinemawaddle.util.service.authentication.IAuthenticationService;
+import project.epam.com.cinemawaddle.util.service.authentication.Session;
+import project.epam.com.cinemawaddle.util.service.authentication.Token;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

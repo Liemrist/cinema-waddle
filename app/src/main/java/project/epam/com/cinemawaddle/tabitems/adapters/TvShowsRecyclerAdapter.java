@@ -10,19 +10,19 @@ import java.util.List;
 
 import project.epam.com.cinemawaddle.R;
 import project.epam.com.cinemawaddle.util.Constants;
-import project.epam.com.cinemawaddle.util.tvshows.TvListResult;
+import project.epam.com.cinemawaddle.util.service.tvshows.TvShow;
 
 
 /**
- * RecyclerView adapter to display a list of {@link TvListResult}.
+ * RecyclerView adapter to display a list of {@link TvShow}.
  */
-public class TvShowsRecyclerAdapter extends BaseAdapter<TvListResult> {
+public class TvShowsRecyclerAdapter extends BaseAdapter<TvShow> {
 
     protected Context context;
     private OnMovieClickListener listener;
 
     public TvShowsRecyclerAdapter(Context context, OnMovieClickListener listener,
-                                  List<TvListResult> movies) {
+                                  List<TvShow> movies) {
         super(movies);
         this.context = context;
         this.listener = listener;
@@ -31,11 +31,11 @@ public class TvShowsRecyclerAdapter extends BaseAdapter<TvListResult> {
 
     @Override
     public void onBindViewHolder(BaseAdapter.ViewHolder holder, int position) {
-        TvListResult movie = objects.get(position);
+        TvShow movie = objects.get(position);
 
         holder.object = movie;
         holder.titleView.setText(movie.getName());
-        holder.genreView.setText(movie.getFirst_air_date());
+        holder.genreView.setText(movie.getFirstAirDate());
         holder.ratingView.setText(getVote(movie));
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
@@ -44,7 +44,7 @@ public class TvShowsRecyclerAdapter extends BaseAdapter<TvListResult> {
         });
 
         Glide.with(context)
-                .load(Constants.SECURE_BASE_IMAGE_URL + movie.getPoster_path())
+                .load(Constants.SECURE_BASE_IMAGE_URL + movie.getPosterPath())
                 .centerCrop()
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
@@ -53,7 +53,7 @@ public class TvShowsRecyclerAdapter extends BaseAdapter<TvListResult> {
                 .into(holder.posterView);
     }
 
-    protected String getVote(TvListResult movie) {
+    protected String getVote(TvShow movie) {
         double voteAverage = movie.getVoteAverage();
         return voteAverage == 0.0
                 ? "--"
@@ -61,6 +61,6 @@ public class TvShowsRecyclerAdapter extends BaseAdapter<TvListResult> {
     }
 
     public interface OnMovieClickListener {
-        void onMovieClick(TvListResult movie);
+        void onMovieClick(TvShow movie);
     }
 }

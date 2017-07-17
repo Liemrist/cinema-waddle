@@ -2,7 +2,7 @@ package project.epam.com.cinemawaddle.main.view;
 
 import android.net.Uri;
 
-import project.epam.com.cinemawaddle.util.authentication.Account;
+import project.epam.com.cinemawaddle.util.service.authentication.Account;
 
 public interface IMainView {
 

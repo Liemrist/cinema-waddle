@@ -1,5 +1,6 @@
-package project.epam.com.cinemawaddle.util.movies;
+package project.epam.com.cinemawaddle.util.service.movies;
 
+import project.epam.com.cinemawaddle.util.service.ServiceResult;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -21,20 +22,20 @@ public interface IMoviesService {
      * @return A list of objects in theatres.
      */
     @GET("movie/now_playing")
-    Call<MovieServiceResult> getNowPlaying(@Query("api_key") String apiKey,
-                                           @Query("language") String language,
-                                           @Query("page") int page,
-                                           @Query("region") String region);
+    Call<ServiceResult<Movie>> getNowPlaying(@Query("api_key") String apiKey,
+                                             @Query("language") String language,
+                                             @Query("page") int page,
+                                             @Query("region") String region);
 
 
     /**
      * Gets the top rated objects on TMDb.
      */
     @GET("movie/top_rated")
-    Call<MovieServiceResult> getTopRated(@Query("api_key") String apiKey,
-                                         @Query("language") String language,
-                                         @Query("page") int page,
-                                         @Query("region") String region);
+    Call<ServiceResult<Movie>> getTopRated(@Query("api_key") String apiKey,
+                                           @Query("language") String language,
+                                           @Query("page") int page,
+                                           @Query("region") String region);
 
     /**
      * This is a release type query that looks for all objects that
@@ -47,32 +48,32 @@ public interface IMoviesService {
      * @return A list of upcoming objects in theatres.
      */
     @GET("movie/upcoming")
-    Call<MovieServiceResult> getUpcoming(@Query("api_key") String apiKey,
-                                         @Query("language") String language,
-                                         @Query("page") int page,
-                                         @Query("region") String region);
+    Call<ServiceResult<Movie>> getUpcoming(@Query("api_key") String apiKey,
+                                           @Query("language") String language,
+                                           @Query("page") int page,
+                                           @Query("region") String region);
 
     /**
      * Gets the list of your favorite objects.
      */
     @GET("account/{account_id}/favorite/movies")
-    Call<MovieServiceResult> getFavourites(@Path("account_id") int accountId,
-                                           @Query("api_key") String apiKey,
-                                           @Query("language") String language,
-                                           @Query("session_id") String sessionId,
-                                           @Query("sort_by") String sortBy,
-                                           @Query("page") int page);
+    Call<ServiceResult<Movie>> getFavourites(@Path("account_id") int accountId,
+                                             @Query("api_key") String apiKey,
+                                             @Query("language") String language,
+                                             @Query("session_id") String sessionId,
+                                             @Query("sort_by") String sortBy,
+                                             @Query("page") int page);
 
     /**
      * Gets a list of all the objects you have added to your watchlist.
      */
     @GET("account/{account_id}/watchlist/movies")
-    Call<MovieServiceResult> getWatchlist(@Path("account_id") int accountId,
-                                          @Query("api_key") String apiKey,
-                                          @Query("language") String language,
-                                          @Query("session_id") String sessionId,
-                                          @Query("sort_by") String sortBy,
-                                          @Query("page") int page);
+    Call<ServiceResult<Movie>> getWatchlist(@Path("account_id") int accountId,
+                                            @Query("api_key") String apiKey,
+                                            @Query("language") String language,
+                                            @Query("session_id") String sessionId,
+                                            @Query("sort_by") String sortBy,
+                                            @Query("page") int page);
 
     /**
      * Gets the primary information about a object.

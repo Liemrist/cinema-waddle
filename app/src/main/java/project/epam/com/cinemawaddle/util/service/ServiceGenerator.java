@@ -1,5 +1,6 @@
-package project.epam.com.cinemawaddle.util;
+package project.epam.com.cinemawaddle.util.service;
 
+import project.epam.com.cinemawaddle.util.Constants;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
