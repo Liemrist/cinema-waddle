@@ -4,7 +4,7 @@ package project.epam.com.cinemawaddle.tabitems.movies.model;
 import android.content.Context;
 
 import project.epam.com.cinemawaddle.BuildConfig;
-import project.epam.com.cinemawaddle.tabitems.BaseTabModelImpl;
+import project.epam.com.cinemawaddle.tabitems.base.BaseTabModelImpl;
 import project.epam.com.cinemawaddle.util.service.ServiceResult;
 import project.epam.com.cinemawaddle.util.Constants;
 import project.epam.com.cinemawaddle.util.service.ServiceGenerator;
@@ -15,7 +15,7 @@ import retrofit2.Call;
 
 public class TabModel extends BaseTabModelImpl<Movie, ServiceResult<Movie>> implements ITabModel {
 
-    private IMoviesService client;
+    private final IMoviesService client;
 
 
     public TabModel(Context context) {

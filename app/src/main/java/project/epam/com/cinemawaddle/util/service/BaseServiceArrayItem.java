@@ -13,6 +13,8 @@ public abstract class BaseServiceArrayItem {
 
     public abstract String getName();
 
+    public abstract String getReleaseDate();
+
     public int getId() {
         return id;
     }

@@ -4,7 +4,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 abstract class BasePagerAdapter extends FragmentPagerAdapter {
-    private String[] tabTitles;
+    private final String[] tabTitles;
 
     BasePagerAdapter(FragmentManager manager, String[] tabTitles) {
         super(manager);

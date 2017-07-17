@@ -4,7 +4,7 @@ package project.epam.com.cinemawaddle.tabitems.tv.model;
 import android.content.Context;
 
 import project.epam.com.cinemawaddle.BuildConfig;
-import project.epam.com.cinemawaddle.tabitems.BaseTabModelImpl;
+import project.epam.com.cinemawaddle.tabitems.base.BaseTabModelImpl;
 import project.epam.com.cinemawaddle.util.Constants;
 import project.epam.com.cinemawaddle.util.service.ServiceGenerator;
 import project.epam.com.cinemawaddle.util.service.ServiceResult;
@@ -15,7 +15,7 @@ import retrofit2.Call;
 
 public class TvShowsModel extends BaseTabModelImpl<TvShow, ServiceResult<TvShow>> implements ITvShowModel {
 
-    private ITvShowService client;
+    private final ITvShowService client;
 
     public TvShowsModel(Context context) {
         super(context);

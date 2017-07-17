@@ -1,4 +1,4 @@
-package project.epam.com.cinemawaddle.tabitems;
+package project.epam.com.cinemawaddle.tabitems.base;
 
 import java.util.List;
 
@@ -10,9 +10,11 @@ public interface BaseTabModel<T, S> {
 
     void fetchWatchlist(OnFinishedListener<S> listener, String language, String sortBy, int page);
 
+
     void sortMoviesByName(List<T> items);
 
     void sortMoviesByRating(List<T> items);
+
 
     interface OnFinishedListener<S> extends ModelBaseListener {
         void onFetchingEnd(S movies);

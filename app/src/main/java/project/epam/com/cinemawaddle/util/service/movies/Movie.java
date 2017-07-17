@@ -15,12 +15,13 @@ public class Movie extends BaseServiceArrayItem {
         return title;
     }
 
-    public String getOriginalTitle() {
-        return original_title;
-    }
-
+    @Override
     public String getReleaseDate() {
         return release_date;
+    }
+
+    public String getOriginalTitle() {
+        return original_title;
     }
 
     public boolean isAdult() {

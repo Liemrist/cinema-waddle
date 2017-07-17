@@ -111,7 +111,7 @@ public class DetailsFragment extends Fragment implements IMovieDetails {
         }
     }
 
-    public void animateFAB(){
+    private void animateFAB(){
 
         if(isFabOpen){
 

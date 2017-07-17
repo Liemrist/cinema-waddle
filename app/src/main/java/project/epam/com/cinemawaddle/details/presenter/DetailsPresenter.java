@@ -10,7 +10,7 @@ import project.epam.com.cinemawaddle.util.service.movies.PostResponse;
 public class DetailsPresenter implements IMovieDetailsPresenter, IDetailsModel.OnFinishedListener {
 
     private DetailsFragment view;
-    private IDetailsModel model;
+    private final IDetailsModel model;
 
 
     public DetailsPresenter(DetailsFragment view, IDetailsModel model) {

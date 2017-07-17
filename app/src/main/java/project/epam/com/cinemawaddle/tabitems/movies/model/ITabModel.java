@@ -1,6 +1,6 @@
 package project.epam.com.cinemawaddle.tabitems.movies.model;
 
-import project.epam.com.cinemawaddle.tabitems.BaseTabModel;
+import project.epam.com.cinemawaddle.tabitems.base.BaseTabModel;
 import project.epam.com.cinemawaddle.util.service.ServiceResult;
 import project.epam.com.cinemawaddle.util.service.movies.Movie;
 

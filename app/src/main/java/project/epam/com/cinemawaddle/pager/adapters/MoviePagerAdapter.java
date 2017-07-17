@@ -3,34 +3,34 @@ package project.epam.com.cinemawaddle.pager.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import project.epam.com.cinemawaddle.tabitems.movies.view.MovieBlankFragment;
-import project.epam.com.cinemawaddle.tabitems.movies.view.MovieListFragment;
+import project.epam.com.cinemawaddle.tabitems.movies.view.MovieSubFragment;
+import project.epam.com.cinemawaddle.tabitems.movies.view.MoviePrimeFragment;
 import project.epam.com.cinemawaddle.util.Constants;
 
 public class MoviePagerAdapter extends BasePagerAdapter {
 
-    private MovieListFragment movieListFragment;
-    private MovieBlankFragment movieBlankFragment1;
-    private MovieBlankFragment movieBlankFragment2;
+    private final MoviePrimeFragment moviePrimeFragment;
+    private final MovieSubFragment movieSubFragment1;
+    private final MovieSubFragment movieSubFragment2;
 
 
     public MoviePagerAdapter(FragmentManager manager, String[] tabTitles) {
         super(manager, tabTitles);
 
-        movieListFragment = new MovieListFragment();
-        movieBlankFragment1 = MovieBlankFragment.newInstance(Constants.WATCHLIST);
-        movieBlankFragment2 = MovieBlankFragment.newInstance(Constants.FAVORITES);
+        moviePrimeFragment = new MoviePrimeFragment();
+        movieSubFragment1 = MovieSubFragment.newInstance(Constants.WATCHLIST);
+        movieSubFragment2 = MovieSubFragment.newInstance(Constants.FAVORITES);
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position) {
             case Constants.MOVIES:
-                return movieListFragment;
+                return moviePrimeFragment;
             case Constants.WATCHLIST:
-                return movieBlankFragment1;
+                return movieSubFragment1;
             case Constants.FAVORITES:
-                return movieBlankFragment2;
+                return movieSubFragment2;
         }
         return null;
     }

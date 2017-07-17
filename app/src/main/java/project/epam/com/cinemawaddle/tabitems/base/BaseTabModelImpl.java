@@ -1,4 +1,4 @@
-package project.epam.com.cinemawaddle.tabitems;
+package project.epam.com.cinemawaddle.tabitems.base;
 
 
 import android.content.Context;
@@ -8,10 +8,8 @@ import android.support.annotation.NonNull;
 import java.util.Collections;
 import java.util.List;
 
-import okhttp3.ResponseBody;
-import project.epam.com.cinemawaddle.util.service.BaseServiceArrayItem;
 import project.epam.com.cinemawaddle.util.Constants;
-import project.epam.com.cinemawaddle.util.ResponseHelper;
+import project.epam.com.cinemawaddle.util.service.BaseServiceArrayItem;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,7 +21,7 @@ public abstract class BaseTabModelImpl<T extends BaseServiceArrayItem, S/* exten
     protected SharedPreferences preferences;
 
 
-    public BaseTabModelImpl(Context context) {
+    protected BaseTabModelImpl(Context context) {
         preferences = context.getSharedPreferences(Constants.PREFERENCES_NAME, Context.MODE_PRIVATE);
     }
 
@@ -48,16 +46,11 @@ public abstract class BaseTabModelImpl<T extends BaseServiceArrayItem, S/* exten
             public void onResponse(@NonNull Call<S> call,
                                    @NonNull Response<S> response) {
                 S movieServiceResult = response.body();
-                ResponseBody errorBody = response.errorBody();
 
                 if (movieServiceResult != null) {
                     listener.onFetchingEnd(movieServiceResult);
-                } else if (errorBody != null) {
-                    ResponseHelper.onResponseError(
-                            errorBody,
-                            Constants.ERROR_MESSAGE_FETCHING_MOVIES,
-                            Constants.TAG_TAB_MODEL,
-                            listener);
+                } else if (response.errorBody() != null) {
+                    listener.onFailed(Constants.ERROR_MESSAGE_FETCHING_MOVIES);
                 }
             }
 

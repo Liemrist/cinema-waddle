@@ -1,4 +1,4 @@
-package project.epam.com.cinemawaddle.tabitems.tv.view;
+package project.epam.com.cinemawaddle.tabitems.movies.view;
 
 
 import android.os.Bundle;
@@ -7,29 +7,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-
-import java.util.ArrayList;
 
 import project.epam.com.cinemawaddle.R;
-import project.epam.com.cinemawaddle.tabitems.BaseTabViewImpl;
-import project.epam.com.cinemawaddle.tabitems.adapters.TvShowsRecyclerAdapter;
-import project.epam.com.cinemawaddle.tabitems.tv.model.TvShowsModel;
-import project.epam.com.cinemawaddle.tabitems.tv.presenter.TvShowPresenter;
+import project.epam.com.cinemawaddle.tabitems.base.BaseTabViewImpl;
+import project.epam.com.cinemawaddle.tabitems.movies.model.TabModel;
+import project.epam.com.cinemawaddle.tabitems.movies.presenter.MovieListPresenter;
 import project.epam.com.cinemawaddle.util.Constants;
-import project.epam.com.cinemawaddle.util.service.tvshows.TvShow;
+import project.epam.com.cinemawaddle.util.service.movies.Movie;
 
 
-public class TvShowsFragment extends BaseTabViewImpl<TvShow, TvShowPresenter>
-        implements TvShowsRecyclerAdapter.OnMovieClickListener {
+public class MoviePrimeFragment extends BaseTabViewImpl<Movie, MovieListPresenter> {
 
-    public TvShowsFragment() {
+    public MoviePrimeFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_tab, container, false);
     }
 
@@ -37,33 +31,33 @@ public class TvShowsFragment extends BaseTabViewImpl<TvShow, TvShowPresenter>
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        presenter = new MovieListPresenter(this, new TabModel(getContext()));
+
+        swipeRefreshLayout.setOnRefreshListener(() -> presenter
+                .onPrimeSwipeRefresh(spinnerView.getSelectedItemPosition()));
+
         initRecycler();
-
-        initSpinner(R.array.tv_show_spinner_items);
-
-        presenter = new TvShowPresenter(this, new TvShowsModel(getContext()));
+        initSpinner(R.array.spinner_items);
     }
+
 
     @Override
     protected void initRecycler() {
         super.initRecycler();
 
-        items = new ArrayList<>();
-
-        recyclerView.setAdapter(new TvShowsRecyclerAdapter(getContext(), this, items));
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy > 0) //check for scroll down
+                if (dy > 0) // Check for scroll down.
                 {
-                    visibleItemCount = layoutManager.getChildCount();
                     totalItemCount = layoutManager.getItemCount();
+                    visibleItemCount = layoutManager.getChildCount();
                     pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
 
                     if (loading) {
                         if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
                             loading = false;
-                            presenter.loadMovies(spinnerView.getSelectedItemPosition(), page);
+                            presenter.loadMoviesOnScroll(spinnerView.getSelectedItemPosition(), page);
                         }
                     }
                 }
@@ -71,19 +65,16 @@ public class TvShowsFragment extends BaseTabViewImpl<TvShow, TvShowPresenter>
         });
     }
 
-
+    @Override
     protected void initSpinner(int textArrayResId) {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                textArrayResId, R.layout.item_spinner);
-        adapter.setDropDownViewResource(R.layout.item_spinner_dropdown);
-        spinnerView.setAdapter(adapter);
+        super.initSpinner(textArrayResId);
 
         spinnerView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 items.clear();
                 page = Constants.DEFAULT_PAGE;
-                presenter.loadMovies(position, page);
+                presenter.loadObjects(position, page);
             }
 
             @Override
@@ -94,7 +85,7 @@ public class TvShowsFragment extends BaseTabViewImpl<TvShow, TvShowPresenter>
 
 
     @Override
-    public void onMovieClick(TvShow movie) {
+    public void onMovieClick(Movie movie) {
         presenter.onMovieClicked(getContext(), movie);
     }
 }

@@ -3,28 +3,32 @@ package project.epam.com.cinemawaddle.tabitems.movies.view;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-
-import java.util.ArrayList;
 
 import project.epam.com.cinemawaddle.R;
-import project.epam.com.cinemawaddle.tabitems.BaseTabViewImpl;
-import project.epam.com.cinemawaddle.tabitems.adapters.MoviesRecyclerAdapter;
+import project.epam.com.cinemawaddle.tabitems.base.BaseTabViewImpl;
 import project.epam.com.cinemawaddle.tabitems.movies.model.TabModel;
 import project.epam.com.cinemawaddle.tabitems.movies.presenter.MovieListPresenter;
 import project.epam.com.cinemawaddle.util.Constants;
 import project.epam.com.cinemawaddle.util.service.movies.Movie;
 
 
-public class MovieListFragment extends BaseTabViewImpl<Movie, MovieListPresenter> implements
-        MoviesRecyclerAdapter.OnMovieClickListener {
+public class MovieSubFragment extends BaseTabViewImpl<Movie, MovieListPresenter> {
 
-    public MovieListFragment() {
+    private int position;
+
+
+    public MovieSubFragment() {
+    }
+
+    public static MovieSubFragment newInstance(int index) {
+        MovieSubFragment fragment = new MovieSubFragment();
+        Bundle args = new Bundle();
+        args.putInt(Constants.ARGUMENT_POSITION_INDEX, index);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -37,61 +41,42 @@ public class MovieListFragment extends BaseTabViewImpl<Movie, MovieListPresenter
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        presenter = new MovieListPresenter(this, new TabModel(getContext()));
+
+        swipeRefreshLayout.setOnRefreshListener(() -> presenter.onSubSwipeRefresh(position));
+
         initRecycler();
 
-        initSpinner(R.array.spinner_items);
-
-        presenter = new MovieListPresenter(this, new TabModel(getContext()));
+        if (getArguments() != null) {
+            position = getArguments().getInt(Constants.ARGUMENT_POSITION_INDEX);
+            if (position == Constants.WATCHLIST) presenter.loadWatchlist(page);
+            else if (position == Constants.FAVORITES) presenter.loadFavorites(page);
+        }
     }
-
 
     @Override
     protected void initRecycler() {
         super.initRecycler();
-
-        items = new ArrayList<>();
-
-        recyclerView.setAdapter(new MoviesRecyclerAdapter(getContext(), this, items));
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0) //check for scroll down
                 {
-                    visibleItemCount = layoutManager.getChildCount();
                     totalItemCount = layoutManager.getItemCount();
+                    visibleItemCount = layoutManager.getChildCount();
                     pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
 
                     if (loading) {
                         if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
                             loading = false;
-                            Log.v("...", "Last Item Wow !");
-                            presenter.loadMovies(spinnerView.getSelectedItemPosition(), page);
+                            if (position == Constants.WATCHLIST) presenter.loadWatchlist(page);
+                            else if (position == Constants.FAVORITES) presenter.loadFavorites(page);
                         }
                     }
                 }
             }
         });
     }
-
-    protected void initSpinner(int textArrayResId) {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                textArrayResId, R.layout.item_spinner);
-        adapter.setDropDownViewResource(R.layout.item_spinner_dropdown);
-        spinnerView.setAdapter(adapter);
-        spinnerView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                items.clear();
-                page = Constants.DEFAULT_PAGE;
-                presenter.loadMovies(position, page);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-    }
-
 
     @Override
     public void onMovieClick(Movie movie) {

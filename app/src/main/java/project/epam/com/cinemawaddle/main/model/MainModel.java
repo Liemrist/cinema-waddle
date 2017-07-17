@@ -20,7 +20,7 @@ import retrofit2.Response;
 
 public class MainModel implements IMainModel {
 
-    private Context context;
+    private final Context context;
     private String requestToken;
     private IAuthenticationService service;
 
