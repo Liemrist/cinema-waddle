@@ -1,8 +1,16 @@
 package project.epam.com.cinemawaddle.main.view;
 
-import project.epam.com.cinemawaddle.util.base.BaseView;
+import android.net.Uri;
+
 import project.epam.com.cinemawaddle.util.authentication.Account;
 
-interface IMainView extends BaseView {
+public interface IMainView {
+
     void showAccountDetails(Account account);
+
+    void hideAccountDetails();
+
+    void showMessage(String message);
+
+    void launchBrowser(Uri uri);
 }

@@ -1,31 +1,38 @@
 package project.epam.com.cinemawaddle.main.presenter;
 
-import android.content.Intent;
 
-import project.epam.com.cinemawaddle.util.Constants;
-import project.epam.com.cinemawaddle.util.authentication.Account;
+import android.net.Uri;
+
 import project.epam.com.cinemawaddle.main.model.IMainModel;
-import project.epam.com.cinemawaddle.main.view.MainActivity;
+import project.epam.com.cinemawaddle.main.view.IMainView;
+import project.epam.com.cinemawaddle.util.authentication.Account;
+
 
 public class MainPresenter implements IMainPresenter, IMainModel.OnFinishedListener {
 
-    private MainActivity view;
+    private IMainView view;
     private IMainModel model;
 
 
-    public MainPresenter(MainActivity view, IMainModel model) {
+    public MainPresenter(IMainView view, IMainModel model) {
         this.view = view;
         this.model = model;
     }
 
     @Override
     public void createSession() {
-        model.createNewSession(this);
+        model.createSession(this);
     }
 
     @Override
-    public void onAuthenticateClick() {
-        model.createNewRequestToken(this);
+    public void connectToTmdb() {
+        model.createRequestToken(this);
+    }
+
+    @Override
+    public void disconnectFromTmdb() {
+        model.disconnectFromTmdb();
+        view.hideAccountDetails();
     }
 
     @Override
@@ -34,18 +41,13 @@ public class MainPresenter implements IMainPresenter, IMainModel.OnFinishedListe
     }
 
     @Override
-    public void onFetchAccountDetailsFinished(Account details) {
+    public void onAccountDetailsFetched(Account details) {
         view.showAccountDetails(details);
     }
 
     @Override
-    public void onCreateNewTokenFinished(Intent intent) {
-        view.startActivityForResult(intent, Constants.ACTIVITY_REQUEST_CODE);
-    }
-
-    @Override
-    public void onFailed(String errorMessage) {
-        view.showMessage(errorMessage);
+    public void onTokenCreated(Uri uri) {
+        view.launchBrowser(uri);
     }
 
     @Override
@@ -54,7 +56,13 @@ public class MainPresenter implements IMainPresenter, IMainModel.OnFinishedListe
     }
 
     @Override
+    public void onFailed(String errorMessage) {
+        view.showMessage(errorMessage);
+    }
+
+    @Override
     public void detach() {
         view = null;
+        model = null;
     }
 }

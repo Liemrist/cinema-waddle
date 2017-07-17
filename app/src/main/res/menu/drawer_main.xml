@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single"
+           android:id="@+id/menu_top">
+        <item
+            android:id="@+id/nav_movies"
+            android:icon="@mipmap/ic_launcher"
+            android:checked="true"
+            android:title="@string/objects"/>
+        <item
+            android:id="@+id/nav_tv_shows"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/tv_shows"/>
+    </group>
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
+    <item
+        android:id="@+id/nav_connect"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/connect_to_tmdb"/>
+    <item
+        android:id="@+id/nav_disconnect"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/disconnect_from_tmdb"/>
+    </group>
+</menu>

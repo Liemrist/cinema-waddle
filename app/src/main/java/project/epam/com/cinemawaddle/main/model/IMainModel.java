@@ -1,23 +1,27 @@
 package project.epam.com.cinemawaddle.main.model;
 
-import android.content.Intent;
 
-import project.epam.com.cinemawaddle.util.base.ModelBaseListener;
+import android.net.Uri;
+
 import project.epam.com.cinemawaddle.util.authentication.Account;
+import project.epam.com.cinemawaddle.util.base.ModelBaseListener;
+
 
 public interface IMainModel {
 
     void fetchAccountDetails(OnFinishedListener listener);
 
-    void createNewRequestToken(OnFinishedListener listener);
+    void createRequestToken(OnFinishedListener listener);
 
-    void createNewSession(OnFinishedListener listener);
+    void createSession(OnFinishedListener listener);
+
+    void disconnectFromTmdb();
 
     interface OnFinishedListener extends ModelBaseListener {
 
-        void onFetchAccountDetailsFinished(Account details);
+        void onAccountDetailsFetched(Account details);
 
-        void onCreateNewTokenFinished(Intent intent);
+        void onTokenCreated(Uri uri);
 
         void onSessionCreated();
     }

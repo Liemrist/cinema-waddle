@@ -2,12 +2,25 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="project.epam.com.cinemawaddle.tabitem.view.MovieListFragment">
+             tools:context="project.epam.com.cinemawaddle.tabitems.objects.view.MovieListFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/view_movies"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/swiperefresh_titles"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/view_movies"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/item_movie"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <TextView
         android:id="@+id/text_message"

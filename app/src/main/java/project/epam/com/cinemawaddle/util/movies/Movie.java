@@ -68,7 +68,7 @@ public class Movie {
         return video;
     }
 
-    public double getVote_average() {
+    public double getVoteAverage() {
         return vote_average;
     }
 }

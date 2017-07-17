@@ -1,9 +1,11 @@
 package project.epam.com.cinemawaddle.details.presenter;
 
+
 import project.epam.com.cinemawaddle.details.view.DetailsFragment;
 import project.epam.com.cinemawaddle.details.model.IDetailsModel;
 import project.epam.com.cinemawaddle.util.movies.Details;
 import project.epam.com.cinemawaddle.util.movies.PostResponse;
+
 
 public class DetailsPresenter implements IMovieDetailsPresenter, IDetailsModel.OnFinishedListener {
 

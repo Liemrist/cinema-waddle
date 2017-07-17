@@ -7,6 +7,7 @@ import project.epam.com.cinemawaddle.util.movies.Details;
 import project.epam.com.cinemawaddle.util.movies.PostResponse;
 
 public interface IDetailsModel {
+
     void fetchDetails(int id, OnFinishedListener listener);
 
     void setFavourite(Context context, String mediaType, int mediaId, boolean isFavorite,

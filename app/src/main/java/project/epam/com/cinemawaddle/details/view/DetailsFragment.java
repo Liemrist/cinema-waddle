@@ -1,13 +1,17 @@
 package project.epam.com.cinemawaddle.details.view;
 
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -19,10 +23,14 @@ import project.epam.com.cinemawaddle.details.presenter.DetailsPresenter;
 import project.epam.com.cinemawaddle.util.Constants;
 import project.epam.com.cinemawaddle.util.movies.Details;
 
+
 public class DetailsFragment extends Fragment implements IMovieDetails {
 
     @BindView(R.id.text_overview) TextView textView;
-    @BindView(R.id.button_fab) FloatingActionButton fabView;
+
+    private Boolean isFabOpen = false;
+    private FloatingActionButton fab,fab1,fab2;
+    private Animation fab_open,fab_close,rotate_forward,rotate_backward;
 
     private DetailsPresenter presenter;
     private Unbinder unbinder;
@@ -51,11 +59,27 @@ public class DetailsFragment extends Fragment implements IMovieDetails {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         final int movieId = getArguments().getInt(Constants.ARGUMENT_MOVIE_ID);
+//
+//        fabView.setOnClickListener(view1 -> presenter.onMarkAsFavouriteClick(
+//                Constants.MEDIA_TYPE_MOVIE,
+//                movieId,
+//                true));
 
-        fabView.setOnClickListener(view1 -> presenter.onMarkAsFavouriteClick(
-                Constants.MEDIA_TYPE_MOVIE,
-                movieId,
-                true));
+        fab = (FloatingActionButton)view.findViewById(R.id.fab);
+        fab1 = (FloatingActionButton)view.findViewById(R.id.fab1);
+        fab2 = (FloatingActionButton)view.findViewById(R.id.fab2);
+        fab_open = AnimationUtils.loadAnimation(getContext(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getContext(),R.anim.fab_close);
+        rotate_forward = AnimationUtils.loadAnimation(getContext(),R.anim.rotate_forward);
+        rotate_backward = AnimationUtils.loadAnimation(getContext(),R.anim.rotate_backward);
+        fab.setOnClickListener(v -> animateFAB());
+        fab1.setOnClickListener(v -> Log.d("Raj", "Fab 1"));
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Raj", "Fab 2");
+            }
+        });
 
         presenter = new DetailsPresenter(this, new DetailsModel());
         presenter.loadDetails(movieId);
@@ -89,6 +113,31 @@ public class DetailsFragment extends Fragment implements IMovieDetails {
         if (view != null) {
             Snackbar.make(view, message, Snackbar.LENGTH_LONG)
                     .show();
+        }
+    }
+
+    public void animateFAB(){
+
+        if(isFabOpen){
+
+            fab.startAnimation(rotate_backward);
+            fab1.startAnimation(fab_close);
+            fab2.startAnimation(fab_close);
+            fab1.setClickable(false);
+            fab2.setClickable(false);
+            isFabOpen = false;
+            Log.d("Raj", "close");
+
+        } else {
+
+            fab.startAnimation(rotate_forward);
+            fab1.startAnimation(fab_open);
+            fab2.startAnimation(fab_open);
+            fab1.setClickable(true);
+            fab2.setClickable(true);
+            isFabOpen = true;
+            Log.d("Raj","open");
+
         }
     }
 }

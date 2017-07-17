@@ -1,5 +1,6 @@
 package project.epam.com.cinemawaddle.details.model;
 
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import project.epam.com.cinemawaddle.util.movies.PostResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 
 public class DetailsModel implements IDetailsModel {
 
@@ -37,7 +39,8 @@ public class DetailsModel implements IDetailsModel {
     }
 
     @Override
-    public void setFavourite(Context context, String mediaType, int mediaId, boolean isFavorite, OnFinishedListener listener) {
+    public void setFavourite(Context context, String mediaType, int mediaId, boolean isFavorite,
+                             OnFinishedListener listener) {
 
         SharedPreferences sharedPref =
                 context.getSharedPreferences(Constants.PREFERENCES_NAME, Context.MODE_PRIVATE);
@@ -55,13 +58,13 @@ public class DetailsModel implements IDetailsModel {
 
         call.enqueue(new Callback<PostResponse>() {
             @Override
-            public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
+            public void onResponse(@NonNull Call<PostResponse> call, @NonNull Response<PostResponse> response) {
                 if (response.body() == null) return;
                 listener.onSetFavoriteFinished(response.body());
             }
 
             @Override
-            public void onFailure(Call<PostResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<PostResponse> call, @NonNull Throwable t) {
 
             }
         });
