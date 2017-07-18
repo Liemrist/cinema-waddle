@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cinema waddle</string>
+    <string name="connect_to_tmdb">Подключиться к TMDb</string>
+    <string name="disconnect_from_tmdb">Отключиться от TMDb</string>
+    <string name="disconnected">Вы не подключены к TMDb</string>
+    <string name="empty_favourites_text">Здесь будут ваши вот эти самые</string>
+    <string name="not_authorized">Не автризирован</string>
+    <string name="objects">Фильмы</string>
+    <string name="sort_by_name">Сортировать по имени</string>
+    <string name="sort_by_rating">Сортировать по рейтингу</string>
+    <string name="tv_shows">Сериалы</string>
+    <string name="you_are">Вы</string>
+</resources>

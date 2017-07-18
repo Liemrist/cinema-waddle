@@ -22,17 +22,20 @@ public class TvShowsModel extends BaseTabModelImpl<TvShow, ServiceResult<TvShow>
         client = ServiceGenerator.createService(ITvShowService.class);
     }
 
+    // TODO: DELETE LANGUAGE FROM METHODS!!!1!
     @Override
     public void fetchTvShows(int type, String language, int page,
                              OnFinishedListener<ServiceResult<TvShow>> listener) {
+        String language1 = preferences.getString(Constants.PREF_LOCALE, Constants.EN);
+
         Call<ServiceResult<TvShow>> call;
 
         switch (type) {
             case Constants.NOW_PLAYING:
-                call = client.getOnTheAir(BuildConfig.TMDB_API_KEY, language, page);
+                call = client.getOnTheAir(BuildConfig.TMDB_API_KEY, language1, page);
                 break;
             case Constants.TOP_RATED:
-                call = client.getTopRated(BuildConfig.TMDB_API_KEY, language, page);
+                call = client.getTopRated(BuildConfig.TMDB_API_KEY, language1, page);
                 break;
             default:
                 call = null;
@@ -45,12 +48,14 @@ public class TvShowsModel extends BaseTabModelImpl<TvShow, ServiceResult<TvShow>
     @Override
     public void fetchFavorites(OnFinishedListener<ServiceResult<TvShow>> listener, String language,
                                String sortBy, int page) {
+        String language1 = preferences.getString(Constants.PREF_LOCALE, Constants.EN);
+
         String sessionId = preferences.getString(Constants.PREF_SESSION_ID, null);
         int accountId = preferences.getInt(Constants.PREF_ACCOUNT_ID, Constants.DEFAULT_ACCOUNT_ID);
 
         Call<ServiceResult<TvShow>> call = client.getFavourites(accountId,
                 BuildConfig.TMDB_API_KEY,
-                language,
+                language1,
                 sessionId,
                 sortBy,
                 page);
@@ -61,12 +66,14 @@ public class TvShowsModel extends BaseTabModelImpl<TvShow, ServiceResult<TvShow>
     @Override
     public void fetchWatchlist(OnFinishedListener<ServiceResult<TvShow>> listener, String language,
                                String sortBy, int page) {
+        String language1 = preferences.getString(Constants.PREF_LOCALE, Constants.EN);
+
         String sessionId = preferences.getString(Constants.PREF_SESSION_ID, null);
         int accountId = preferences.getInt(Constants.PREF_ACCOUNT_ID, Constants.DEFAULT_ACCOUNT_ID);
 
         Call<ServiceResult<TvShow>> call = client.getWatchlist(accountId,
                 BuildConfig.TMDB_API_KEY,
-                language,
+                language1,
                 sessionId,
                 sortBy,
                 page);

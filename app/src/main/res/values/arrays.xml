@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="language_spinner_items">
+        <item>English</item>
+        <item>Russian</item>
+    </string-array>
+    <!--<item>@string/app_name</item>-->
     <string-array name="tv_show_spinner_items">
         <item>On the air</item>
         <item>Top rated</item>

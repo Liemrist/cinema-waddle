@@ -1,10 +1,13 @@
 package project.epam.com.cinemawaddle.tabitems.tv.presenter;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import java.util.ArrayList;
 
+import project.epam.com.cinemawaddle.details.DetailsActivity;
 import project.epam.com.cinemawaddle.tabitems.base.BaseTabPresenterImpl;
 import project.epam.com.cinemawaddle.tabitems.base.BaseTabView;
 import project.epam.com.cinemawaddle.tabitems.tv.model.ITvShowModel;
@@ -55,10 +58,23 @@ public class TvShowPresenter extends BaseTabPresenterImpl<TvShow, ITvShowModel> 
 
                     @Override
                     public void onFailed(String errorMessage) {
-                        if (view != null) {
-                            view.showMessage(errorMessage);
-                        }
+                        if (view != null) view.showTextViewMessage(errorMessage);
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        if (view != null) view.showMessage(errorMessage);
                     }
                 });
+    }
+
+
+    @Override
+    public void onMovieClicked(Context context, TvShow movie) {
+        // fixme: move this somewhere else.
+        Intent intent = new Intent(context, DetailsActivity.class);
+        intent.putExtra(Constants.EXTRA_MOVIE_ID, movie.getId());
+        intent.putExtra(Constants.EXTRA_TYPE, Constants.TV_SHOWS);
+        context.startActivity(intent);
     }
 }

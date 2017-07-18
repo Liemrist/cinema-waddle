@@ -1,13 +1,10 @@
 package project.epam.com.cinemawaddle.tabitems.base;
 
-import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import project.epam.com.cinemawaddle.details.DetailsActivity;
 import project.epam.com.cinemawaddle.util.Constants;
 import project.epam.com.cinemawaddle.util.service.BaseServiceArrayItem;
 import project.epam.com.cinemawaddle.util.service.ServiceResult;
@@ -72,6 +69,11 @@ public abstract class BaseTabPresenterImpl<T extends BaseServiceArrayItem, S ext
 
             @Override
             public void onFailed(String errorMessage) {
+                if (view != null) view.showTextViewMessage(errorMessage);
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
                 if (view != null) view.showMessage(errorMessage);
             }
         };
@@ -96,14 +98,6 @@ public abstract class BaseTabPresenterImpl<T extends BaseServiceArrayItem, S ext
     }
 
     @Override
-    public void onMovieClicked(Context context, T movie) {
-        // fixme: move this somewhere else.
-        Intent intent = new Intent(context, DetailsActivity.class);
-        intent.putExtra(Constants.EXTRA_MOVIE_ID, movie.getId());
-        context.startActivity(intent);
-    }
-
-    @Override
     public void onFetchingEnd(ServiceResult<T> movieServiceResult) {
         if (view != null && movieServiceResult != null) {
             ArrayList<T> items = movieServiceResult.getResults();
@@ -121,6 +115,11 @@ public abstract class BaseTabPresenterImpl<T extends BaseServiceArrayItem, S ext
 
     @Override
     public void onFailed(String errorMessage) {
+        if (view != null) view.showTextViewMessage(errorMessage);
+    }
+
+    @Override
+    public void onFailure(String errorMessage) {
         if (view != null) view.showMessage(errorMessage);
     }
 }

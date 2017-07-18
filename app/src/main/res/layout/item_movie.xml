@@ -4,7 +4,11 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp">
+                android:padding="8dp"
+                android:paddingBottom="8dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="0dp"
+                android:paddingTop="8dp">
 
     <ImageView
         android:id="@+id/image_poster"
@@ -41,8 +45,8 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_alignTop="@+id/text_title"
-        android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="2dp"
         android:layout_toStartOf="@+id/text_rating"
         app:srcCompat="@drawable/ic_tmdb_logo_208x226_green"/>
@@ -70,9 +74,9 @@
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_flag_outline_grey600_24dp"
         android:layout_alignBottom="@+id/image_poster"
-        android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
-        android:layout_toEndOf="@+id/image_poster"/>
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@+id/image_poster"
+        app:srcCompat="@drawable/ic_flag_outline_grey600_24dp"/>
 </RelativeLayout>

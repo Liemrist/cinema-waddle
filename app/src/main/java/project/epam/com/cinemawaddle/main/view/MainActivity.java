@@ -26,6 +26,7 @@ import project.epam.com.cinemawaddle.R;
 import project.epam.com.cinemawaddle.main.model.MainModel;
 import project.epam.com.cinemawaddle.main.presenter.MainPresenter;
 import project.epam.com.cinemawaddle.pager.TabHostFragment;
+import project.epam.com.cinemawaddle.settings.SettingsActivity;
 import project.epam.com.cinemawaddle.util.Constants;
 import project.epam.com.cinemawaddle.util.service.authentication.Account;
 
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     private ImageView imageView;
     private Unbinder unbinder;
     private MainPresenter presenter;
+    private int currentCheckPosition;
 
 
     @Override
@@ -55,8 +57,15 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
         setSupportActionBar(toolbarView);
 
+        if (savedInstanceState != null) {
+            currentCheckPosition = savedInstanceState
+                    .getInt(Constants.BUNDLE_CURRENT_POSITION, Constants.MOVIES);
+        } else {
+            currentCheckPosition = Constants.MOVIES;
+        }
+
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.layout_container, TabHostFragment.newInstance(Constants.MOVIES))
+                .replace(R.id.layout_container, TabHostFragment.newInstance(currentCheckPosition))
                 .commit();
     }
 
@@ -85,6 +94,12 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         // This adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.toolbar_main, menu);
         return true;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(Constants.BUNDLE_CURRENT_POSITION, currentCheckPosition);
     }
 
     @Override
@@ -163,10 +178,16 @@ public class MainActivity extends AppCompatActivity implements IMainView {
                     presenter.disconnectFromTmdb();
                     break;
                 case R.id.nav_movies:
+                    currentCheckPosition = Constants.MOVIES;
                     launchFragmentOfType(Constants.MOVIES);
                     break;
                 case R.id.nav_tv_shows:
+                    currentCheckPosition = Constants.TV_SHOWS;
                     launchFragmentOfType(Constants.TV_SHOWS);
+                    break;
+                case R.id.nav_settings:
+                    Intent intent = new Intent(this, SettingsActivity.class);
+                    startActivity(intent);
                     break;
             }
 
@@ -179,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         TabHostFragment fragment = (TabHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.layout_container);
         if (fragment != null && fragment.getArguments() != null) {
-            int type = fragment.getArguments().getInt(Constants.ARGUMENT_TYPE_INDEX);
+            int type = fragment.getArguments().getInt(Constants.ARGUMENT_TYPE);
             if (type != initialType) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.layout_container, TabHostFragment.newInstance(initialType))

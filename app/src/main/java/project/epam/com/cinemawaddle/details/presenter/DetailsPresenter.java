@@ -3,17 +3,22 @@ package project.epam.com.cinemawaddle.details.presenter;
 
 import project.epam.com.cinemawaddle.details.view.DetailsFragment;
 import project.epam.com.cinemawaddle.details.model.IDetailsModel;
+import project.epam.com.cinemawaddle.details.view.IMovieDetails;
+import project.epam.com.cinemawaddle.util.service.BaseDetailsItem;
 import project.epam.com.cinemawaddle.util.service.movies.Details;
+import project.epam.com.cinemawaddle.util.service.movies.Movie;
 import project.epam.com.cinemawaddle.util.service.movies.PostResponse;
+import project.epam.com.cinemawaddle.util.service.tvshows.TvShow;
+import project.epam.com.cinemawaddle.util.service.tvshows.TvShowDetails;
 
 
 public class DetailsPresenter implements IMovieDetailsPresenter, IDetailsModel.OnFinishedListener {
 
-    private DetailsFragment view;
+    private IMovieDetails view;
     private final IDetailsModel model;
 
 
-    public DetailsPresenter(DetailsFragment view, IDetailsModel model) {
+    public DetailsPresenter(IMovieDetails view, IDetailsModel model) {
         this.view = view;
         this.model = model;
     }
@@ -23,12 +28,20 @@ public class DetailsPresenter implements IMovieDetailsPresenter, IDetailsModel.O
         if (view != null) {
             view.showProgress();
         }
-        model.fetchDetails(id, this);
+        model.fetchMovieDetails(id, this);
+    }
+
+    @Override
+    public void loadTvShowDetails(int id) {
+        if (view != null) {
+            view.showProgress();
+        }
+        model.fetchTvShowDetails(id, this);
     }
 
     @Override
     public void onMarkAsFavouriteClick(String mediaType, int mediaId, boolean isFavorite) {
-        model.setFavourite(view.getContext(), mediaType, mediaId, isFavorite, this);
+        model.setFavourite(mediaType, mediaId, isFavorite, this);
     }
 
     @Override
@@ -45,12 +58,25 @@ public class DetailsPresenter implements IMovieDetailsPresenter, IDetailsModel.O
     }
 
     @Override
+    public void onFetchDetailsFinished(TvShowDetails details) {
+        if (view != null) {
+            view.showDetails(details);
+            view.hideProgress();
+        }
+    }
+
+    @Override
     public void onSetFavoriteFinished(PostResponse details) {
 
     }
 
     @Override
     public void onFailed(String errorMessage) {
+        view.showMessage(errorMessage);
+    }
+
+    @Override
+    public void onFailure(String errorMessage) {
         view.showMessage(errorMessage);
     }
 }

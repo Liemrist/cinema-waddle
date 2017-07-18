@@ -8,5 +8,5 @@
           android:ellipsize="marquee"
           android:maxLines="1"
           android:textColor="@android:color/white"
+          android:textAppearance="@style/TextAppearance.AppCompat.Title"
           tools:text="qwe"/>
-    <!--android:textAppearance="@style/TextAppearance.AppCompat.Title"-->

@@ -57,7 +57,7 @@ public abstract class BaseTabModelImpl<T extends BaseServiceArrayItem, S/* exten
             @Override
             public void onFailure(@NonNull Call<S> call, @NonNull Throwable t) {
                 // the network call was a failure
-                listener.onFailed(Constants.ERROR_MESSAGE_NETWORK);
+                listener.onFailure(Constants.ERROR_MESSAGE_NETWORK);
             }
         };
     }

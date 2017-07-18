@@ -38,7 +38,7 @@ public class TabHostFragment extends Fragment {
     public static TabHostFragment newInstance(int index) {
         TabHostFragment fragment = new TabHostFragment();
         Bundle args = new Bundle();
-        args.putInt(Constants.ARGUMENT_TYPE_INDEX, index);
+        args.putInt(Constants.ARGUMENT_TYPE, index);
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,7 +59,7 @@ public class TabHostFragment extends Fragment {
         if (getArguments() != null) {
             FragmentPagerAdapter pagerAdapter = null;
 
-            int type = getArguments().getInt(Constants.ARGUMENT_TYPE_INDEX);
+            int type = getArguments().getInt(Constants.ARGUMENT_TYPE);
             if (type == Constants.MOVIES) {
                 pagerAdapter = new MoviePagerAdapter(getChildFragmentManager(), movieTabTitles);
             } else if (type == Constants.TV_SHOWS) {
@@ -86,7 +86,7 @@ public class TabHostFragment extends Fragment {
 
     private void initPager(FragmentPagerAdapter pagerAdapter) {
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(Constants.NUMBER_OF_TABS);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

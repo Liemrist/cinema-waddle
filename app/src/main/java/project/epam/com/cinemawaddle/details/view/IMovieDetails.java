@@ -2,8 +2,9 @@ package project.epam.com.cinemawaddle.details.view;
 
 import project.epam.com.cinemawaddle.util.base.BaseView;
 import project.epam.com.cinemawaddle.util.service.movies.Details;
+import project.epam.com.cinemawaddle.util.service.tvshows.TvShowDetails;
 
-interface IMovieDetails extends BaseView {
+public interface IMovieDetails<T> extends BaseView {
 
-    void showDetails(Details movie);
+    void showDetails(T movie);
 }

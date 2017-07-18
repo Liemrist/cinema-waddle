@@ -26,17 +26,19 @@ public class TabModel extends BaseTabModelImpl<Movie, ServiceResult<Movie>> impl
     @Override
     public void fetchMovies(int type, String language, int page, String region,
                             OnFinishedListener<ServiceResult<Movie>> listener) {
+        String language1 = preferences.getString(Constants.PREF_LOCALE, Constants.EN);
+
         Call<ServiceResult<Movie>> call;
 
         switch (type) {
             case Constants.NOW_PLAYING:
-                call = client.getNowPlaying(BuildConfig.TMDB_API_KEY, language, page, region);
+                call = client.getNowPlaying(BuildConfig.TMDB_API_KEY, language1, page, region);
                 break;
             case Constants.TOP_RATED:
-                call = client.getTopRated(BuildConfig.TMDB_API_KEY, language, page, region);
+                call = client.getTopRated(BuildConfig.TMDB_API_KEY, language1, page, region);
                 break;
             case Constants.UPCOMING:
-                call = client.getUpcoming(BuildConfig.TMDB_API_KEY, language, page, region);
+                call = client.getUpcoming(BuildConfig.TMDB_API_KEY, language1, page, region);
                 break;
             default:
                 call = null;
@@ -49,13 +51,14 @@ public class TabModel extends BaseTabModelImpl<Movie, ServiceResult<Movie>> impl
     @Override
     public void fetchFavorites(OnFinishedListener<ServiceResult<Movie>> listener, String language,
                                String sortBy, int page) {
+        String language1 = preferences.getString(Constants.PREF_LOCALE, Constants.EN);
 
         String sessionId = preferences.getString(Constants.PREF_SESSION_ID, null);
         int accountId = preferences.getInt(Constants.PREF_ACCOUNT_ID, Constants.DEFAULT_ACCOUNT_ID);
 
         Call<ServiceResult<Movie>> call = client.getFavourites(accountId,
                 BuildConfig.TMDB_API_KEY,
-                language,
+                language1,
                 sessionId,
                 sortBy,
                 page);
@@ -66,12 +69,14 @@ public class TabModel extends BaseTabModelImpl<Movie, ServiceResult<Movie>> impl
     @Override
     public void fetchWatchlist(OnFinishedListener<ServiceResult<Movie>> listener, String language,
                                String sortBy, int page) {
+        String language1 = preferences.getString(Constants.PREF_LOCALE, Constants.EN);
+
         String sessionId = preferences.getString(Constants.PREF_SESSION_ID, null);
         int accountId = preferences.getInt(Constants.PREF_ACCOUNT_ID, Constants.DEFAULT_ACCOUNT_ID);
 
         Call<ServiceResult<Movie>> call = client.getWatchlist(accountId,
                 BuildConfig.TMDB_API_KEY,
-                language,
+                language1,
                 sessionId,
                 sortBy,
                 page);

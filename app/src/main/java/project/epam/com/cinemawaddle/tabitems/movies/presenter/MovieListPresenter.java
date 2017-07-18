@@ -1,10 +1,13 @@
 package project.epam.com.cinemawaddle.tabitems.movies.presenter;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import java.util.ArrayList;
 
+import project.epam.com.cinemawaddle.details.DetailsActivity;
 import project.epam.com.cinemawaddle.tabitems.base.BaseTabPresenterImpl;
 import project.epam.com.cinemawaddle.tabitems.base.BaseTabView;
 import project.epam.com.cinemawaddle.tabitems.movies.model.ITabModel;
@@ -22,7 +25,7 @@ public class MovieListPresenter extends BaseTabPresenterImpl<Movie, ITabModel> {
     @Override
     public void loadObjects(int position, int page) {
         super.loadObjects(position, page);
-        model.fetchMovies(position, "en-US", page, Constants.REGION_US, this);
+        model.fetchMovies(position, "ru-RU", page, Constants.REGION_US, this);
     }
 
     @Override
@@ -55,10 +58,23 @@ public class MovieListPresenter extends BaseTabPresenterImpl<Movie, ITabModel> {
 
                     @Override
                     public void onFailed(String errorMessage) {
-                        if (view != null) {
-                            view.showMessage(errorMessage);
-                        }
+                        if (view != null) view.showTextViewMessage(errorMessage);
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        if (view != null) view.showMessage(errorMessage);
                     }
                 });
+    }
+
+
+    @Override
+    public void onMovieClicked(Context context, Movie movie) {
+        // fixme: move this somewhere else.
+        Intent intent = new Intent(context, DetailsActivity.class);
+        intent.putExtra(Constants.EXTRA_MOVIE_ID, movie.getId());
+        intent.putExtra(Constants.EXTRA_TYPE, Constants.MOVIES);
+        context.startActivity(intent);
     }
 }

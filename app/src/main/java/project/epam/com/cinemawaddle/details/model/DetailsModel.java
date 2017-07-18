@@ -11,6 +11,8 @@ import project.epam.com.cinemawaddle.util.service.ServiceGenerator;
 import project.epam.com.cinemawaddle.util.service.movies.IMoviesService;
 import project.epam.com.cinemawaddle.util.service.movies.Details;
 import project.epam.com.cinemawaddle.util.service.movies.PostResponse;
+import project.epam.com.cinemawaddle.util.service.tvshows.ITvShowService;
+import project.epam.com.cinemawaddle.util.service.tvshows.TvShowDetails;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -18,10 +20,19 @@ import retrofit2.Response;
 
 public class DetailsModel implements IDetailsModel {
 
+    private SharedPreferences preferences;
+
+
+    public DetailsModel(Context context) {
+        preferences = context.getSharedPreferences(Constants.PREFERENCES_NAME, Context.MODE_PRIVATE);
+    }
+
     @Override
-    public void fetchDetails(int id, OnFinishedListener listener) {
+    public void fetchMovieDetails(int id, OnFinishedListener listener) {
+        String language = preferences.getString(Constants.PREF_LOCALE, Constants.EN);
+
         IMoviesService client = ServiceGenerator.createService(IMoviesService.class);
-        Call<Details> call = client.getDetails(id, BuildConfig.TMDB_API_KEY, null, null);
+        Call<Details> call = client.getDetails(id, BuildConfig.TMDB_API_KEY, language, null);
 
         call.enqueue(new Callback<Details>() {
             @Override
@@ -39,13 +50,31 @@ public class DetailsModel implements IDetailsModel {
     }
 
     @Override
-    public void setFavourite(Context context, String mediaType, int mediaId, boolean isFavorite,
-                             OnFinishedListener listener) {
+    public void fetchTvShowDetails(int id, OnFinishedListener listener) {
+        String language = preferences.getString(Constants.PREF_LOCALE, Constants.EN);
 
-        SharedPreferences sharedPref =
-                context.getSharedPreferences(Constants.PREFERENCES_NAME, Context.MODE_PRIVATE);
-        int accountId = sharedPref.getInt(Constants.PREF_ACCOUNT_ID, Constants.DEFAULT_ACCOUNT_ID);
-        String sessionId = sharedPref.getString(Constants.PREF_SESSION_ID, null);
+        ITvShowService client = ServiceGenerator.createService(ITvShowService.class);
+        Call<TvShowDetails> call = client.getDetails(id, BuildConfig.TMDB_API_KEY, language, null);
+        call.enqueue(new Callback<TvShowDetails>() {
+            @Override
+            public void onResponse(@NonNull Call<TvShowDetails> call,
+                                   @NonNull Response<TvShowDetails> response) {
+                if (response.body() == null) return;
+                listener.onFetchDetailsFinished(response.body());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<TvShowDetails> call, @NonNull Throwable t) {
+                listener.onFailed(Constants.ERROR_MESSAGE_NETWORK);
+            }
+        });
+    }
+
+    @Override
+    public void setFavourite(String mediaType, int mediaId, boolean isFavorite,
+                             OnFinishedListener listener) {
+        int accountId = preferences.getInt(Constants.PREF_ACCOUNT_ID, Constants.DEFAULT_ACCOUNT_ID);
+        String sessionId = preferences.getString(Constants.PREF_SESSION_ID, null);
 
         IMoviesService client = ServiceGenerator.createService(IMoviesService.class);
         Call<PostResponse> call = client.setFavorite(

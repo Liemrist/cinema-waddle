@@ -61,6 +61,11 @@ public class MainPresenter implements IMainPresenter, IMainModel.OnFinishedListe
     }
 
     @Override
+    public void onFailure(String errorMessage) {
+        view.showMessage(errorMessage);
+    }
+
+    @Override
     public void detach() {
         view = null;
         model = null;

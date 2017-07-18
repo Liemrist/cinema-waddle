@@ -4,24 +4,32 @@
            android:id="@+id/menu_top">
         <item
             android:id="@+id/nav_movies"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/ic_movie_grey600_24dp"
             android:checked="true"
             android:title="@string/objects"/>
         <item
             android:id="@+id/nav_tv_shows"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/ic_television_classic_grey600_24dp"
             android:title="@string/tv_shows"/>
+    </group>
+    <group
+        android:id="@+id/menu_middle"
+        android:checkableBehavior="none">
+    <item
+        android:id="@+id/nav_connect"
+        android:icon="@drawable/ic_account_grey600_24dp"
+        android:title="@string/connect_to_tmdb"/>
+    <item
+        android:id="@+id/nav_disconnect"
+        android:icon="@drawable/ic_account_off_grey600_24dp"
+        android:title="@string/disconnect_from_tmdb"/>
     </group>
     <group
         android:id="@+id/menu_bottom"
         android:checkableBehavior="none">
-    <item
-        android:id="@+id/nav_connect"
-        android:icon="@mipmap/ic_launcher"
-        android:title="@string/connect_to_tmdb"/>
-    <item
-        android:id="@+id/nav_disconnect"
-        android:icon="@mipmap/ic_launcher"
-        android:title="@string/disconnect_from_tmdb"/>
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings_grey600_24dp"
+            android:title="@string/settings"/>
     </group>
 </menu>

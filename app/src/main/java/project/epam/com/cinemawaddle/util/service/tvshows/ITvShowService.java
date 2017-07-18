@@ -23,28 +23,39 @@ public interface ITvShowService {
      */
     @GET("tv/top_rated")
     Call<ServiceResult<TvShow>> getTopRated(@Query("api_key") String apiKey,
-                                      @Query("language") String language,
-                                      @Query("page") int page);
+                                            @Query("language") String language,
+                                            @Query("page") int page);
 
     /**
      * Get the list of your favorite TV shows.
      */
     @GET("account/{account_id}/favorite/tv")
     Call<ServiceResult<TvShow>> getFavourites(@Path("account_id") int accountId,
-                                        @Query("api_key") String apiKey,
-                                        @Query("language") String language,
-                                        @Query("session_id") String sessionId,
-                                        @Query("sort_by") String sortBy,
-                                        @Query("page") int page);
+                                              @Query("api_key") String apiKey,
+                                              @Query("language") String language,
+                                              @Query("session_id") String sessionId,
+                                              @Query("sort_by") String sortBy,
+                                              @Query("page") int page);
 
     /**
      * Gets a list of all the objects you have added to your watchlist.
      */
     @GET("account/{account_id}/watchlist/tv")
     Call<ServiceResult<TvShow>> getWatchlist(@Path("account_id") int accountId,
-                                       @Query("api_key") String apiKey,
-                                       @Query("language") String language,
-                                       @Query("session_id") String sessionId,
-                                       @Query("sort_by") String sortBy,
-                                       @Query("page") int page);
+                                             @Query("api_key") String apiKey,
+                                             @Query("language") String language,
+                                             @Query("session_id") String sessionId,
+                                             @Query("sort_by") String sortBy,
+                                             @Query("page") int page);
+
+
+    /**
+     * Get the primary TV show details by id.
+     */
+    @GET("tv/{tv_id}")
+    Call<TvShowDetails> getDetails(@Path("tv_id") int groupId,
+                                   @Query("api_key") String apiKey,
+                                   @Query("language") String language,
+                                   @Query("append_to_response") String appendToResponse);
+
 }

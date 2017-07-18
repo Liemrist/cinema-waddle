@@ -24,9 +24,13 @@ public class Constants {
     public static final int WATCHLIST = 1;
     public static final int FAVORITES = 2;
 
+    public static final String RU = "ru-RU";
+    public static final String EN = "en-US";
+
     public static final String PREFERENCES_NAME = "WaddlePrefs";
     public static final String PREF_SESSION_ID = "PREF_SESSION_ID";
     public static final String PREF_ACCOUNT_ID = "ACCOUNT_ID";
+    public static final String PREF_LOCALE = "PREF_LOCALE";
 
     public static final String ERROR_MESSAGE_TOKEN = "Error creating request token";
     public static final String ERROR_MESSAGE_NETWORK = "Network error";
@@ -37,13 +41,17 @@ public class Constants {
 
     public static final String ARGUMENT_MOVIE_ID = "ARGUMENT_MOVIE_ID";
     public static final String ARGUMENT_POSITION_INDEX = "ARGUMENT_POSITION_INDEX";
-
-    public static final String ARGUMENT_TYPE_INDEX = "ARGUMENT_TYPE_INDEX";
+    public static final String ARGUMENT_TYPE = "ARGUMENT_TYPE";
 
     public static final String EXTRA_MOVIE_ID = "com.epam.project.cinemawaddle.EXTRA_MOVIE_ID";
+    public static final String EXTRA_TYPE = "com.epam.project.cinemawaddle.EXTRA_TYPE";
 
     public static final int ACTIVITY_REQUEST_CODE = 1;
 
     public static final String REGION_US = "us";
     public final static String TEXT_FAVOURITES = "Here will be your favourites";
+
+    public static final int NUMBER_OF_TABS = 3;
+
+    public static final String BUNDLE_CURRENT_POSITION = "BUNDLE_CURRENT_POSITION";
 }
